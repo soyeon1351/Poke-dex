@@ -4,21 +4,31 @@ import './App.css'
 function App() {
 
   useEffect(()=>{
-    const fetchAPI = async () => {
-      const response = await fetch("https://pokeapi.co/api/v2/pokemon-species/1/")
+
+    const numberArray = Array.from({length: 151},(_, i) => i + 1)
+
+
+    const fetchAPI = async (pokemonId) => {
+
+      // Promise.all([1,2,3, ...,151])
+      // => [이상해씨, 이상해풀, ...뮤]
+      const response = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${pokemonId}/`)
       const data = await response.json()
-      console.log(data.flavor_text_entries.find(el => el.language.name === 'ko').flavor_text)
       
       const pokemonData = {
-        id : 1,
+        id : pokemonId,
         name : data.names.find(el => el.language.name === 'ko').name,
         description : data.flavor_text_entries.find(el => el.language.name === 'ko').flavor_text,
-        front : 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png',
-        back : 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/1.png',
+        front : `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`,
+        back : `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/${pokemonId}.png`,
       }
-      console.log(pokemonData)
+      return pokemonData
     }
-    fetchAPI()
+    const fetchPokemonDatas = async () => {
+      const pokemonDatas = await Promise.all(numberArray.map((el) =>  fetchAPI(el)))
+      console.log(pokemonDatas)
+    }
+    fetchPokemonDatas()
   }, [])
 
   return (
