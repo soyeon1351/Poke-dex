@@ -5,9 +5,7 @@ createAsyncThunk(
     async (maxPokemonId) => {
         const numberArray = Array.from({length: maxPokemonId},(_, i) => i + 1)
 
-
-        const fetchAPI = async (pokemonId) => {
-    
+        const fetchAPI = async (pokemonId) => {    
           const response = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${pokemonId}/`)
           const data = await response.json()
           
@@ -20,10 +18,7 @@ createAsyncThunk(
           }
           return pokemonData
         }
-        const fetchPokemonDatas = async () => {
-          const pokemonDatas = await Promise.all(numberArray.map((el) =>  fetchAPI(el)))
-          return (pokemonDatas)
-        }
-        return fetchPokemonDatas()
+
+        return await Promise.all(numberArray.map((el) =>  fetchAPI(el)))
     }
 )
