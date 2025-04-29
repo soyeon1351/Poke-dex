@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import './App.css'
+import './App.scss'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchMultiplePokemonById } from './RTK/thunk'
 
