@@ -13,6 +13,7 @@ function App() {
 
   return (
     <>
+    <h1 className='text-[40px] text-center'>포켓몬 도감</h1>
     </>
   
   )
